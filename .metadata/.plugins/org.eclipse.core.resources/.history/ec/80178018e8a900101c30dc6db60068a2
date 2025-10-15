@@ -1,0 +1,42 @@
+package com.klef.controller;
+
+import com.klef.model.Doctor;
+import com.klef.service.DoctorService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/")
+@CrossOrigin(origins = "*")
+public class DoctorController {
+    private final DoctorService doctorService;
+
+    public DoctorController(DoctorService doctorService) {
+        this.doctorService = doctorService;
+    }
+
+    // Add doctor
+    @PostMapping("/adddoctor")
+    public Doctor addDoctor(@RequestBody Doctor doctor) {
+        return doctorService.addDoctor(doctor);
+    }
+
+    // View all doctors
+    @GetMapping("/viewalldoctors")
+    public List<Doctor> viewAllDoctors() {
+        return doctorService.getAllDoctors();
+    }
+
+    // Update doctor
+    @PutMapping("/updatedoctor/{id}")
+    public Doctor updateDoctor(@PathVariable int id, @RequestBody Doctor doctor) {
+        return doctorService.updateDoctor(id, doctor);
+    }
+
+    // Delete doctor
+    @DeleteMapping("/deletedoctor")
+    public String deleteDoctor(@RequestParam int id) {
+        return doctorService.deleteDoctor(id);
+    }
+}
