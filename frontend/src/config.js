@@ -1,5 +1,2 @@
-const config = {
-     API_URL: "http://localhost:2030/doctorbackend"
-}
-
-export default config;
+// config.js
+export const API_URL = "http://localhost:2030/doctorbackend";
