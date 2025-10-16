@@ -10,11 +10,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/doctor") // Base path for all endpoints
+
 @CrossOrigin(origins = "*")
 public class DoctorController {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    @GetMapping("/")
+    public String home() {
+        return "Jenkins Full Stack Deployment Demo";
+    }
 
     // Add doctor
     @PostMapping("/adddoctor")
@@ -37,7 +44,7 @@ public class DoctorController {
     }
 
     // Get doctor by id
-    @GetMapping("/doctor/{id}")
+    @GetMapping("/{id}") // <-- fixed here
     public ResponseEntity<Doctor> getDoctor(@PathVariable int id) {
         return doctorRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -48,18 +55,18 @@ public class DoctorController {
     @PutMapping("/updatedoctor/{id}")
     public ResponseEntity<String> updateDoctor(@PathVariable int id, @RequestBody Doctor updatedDoctor) {
         return doctorRepository.findById(id)
-            .map(doctor -> {
-                doctor.setName(updatedDoctor.getName());
-                doctor.setEmail(updatedDoctor.getEmail());
-                doctor.setMobileno(updatedDoctor.getMobileno());
-                doctor.setSpecialization(updatedDoctor.getSpecialization());
-                doctor.setQualification(updatedDoctor.getQualification());
-                doctor.setMedicallicense(updatedDoctor.getMedicallicense());
-                doctor.setYearsofexperience(updatedDoctor.getYearsofexperience());
-                doctor.setAddress(updatedDoctor.getAddress());
-                doctorRepository.save(doctor);
-                return ResponseEntity.ok("Doctor updated successfully");
-            })
-            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found"));
+                .map(doctor -> {
+                    doctor.setName(updatedDoctor.getName());
+                    doctor.setEmail(updatedDoctor.getEmail());
+                    doctor.setMobileno(updatedDoctor.getMobileno());
+                    doctor.setSpecialization(updatedDoctor.getSpecialization());
+                    doctor.setQualification(updatedDoctor.getQualification());
+                    doctor.setMedicallicense(updatedDoctor.getMedicallicense());
+                    doctor.setYearsofexperience(updatedDoctor.getYearsofexperience());
+                    doctor.setAddress(updatedDoctor.getAddress());
+                    doctorRepository.save(doctor);
+                    return ResponseEntity.ok("Doctor updated successfully");
+                })
+                .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body("Doctor not found"));
     }
 }
