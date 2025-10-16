@@ -1,2 +1,5 @@
-// src/config.js
-export const API_URL = "http://localhost:8080"; // backend base URL
+const config = {
+    url: "http://localhost:2030/doctorbackend"
+}
+
+export default config;
